@@ -5,7 +5,7 @@
 #include <locale.h>
 #include <time.h>
 
-//Declarando FunÁıes para a verificaÁ„o do CPF
+//Declarando Fun√ß√µes para a verifica√ß√£o do CPF
 int todos_iguais(char[]);
 int verificador_cpf(char[]);
 
@@ -16,7 +16,7 @@ struct Conta{
 	float dinheiro;
 };
 
-//FunÁ„o para criar uma Conta
+//Fun√ß√£o para criar uma Conta
 int criar_conta(struct Conta *contas, int *count, int max){
 	
 	if(*count >= max){
@@ -33,7 +33,7 @@ int criar_conta(struct Conta *contas, int *count, int max){
 	scanf("%14s", nova_conta.cpf);
 	
 	if(verificador_cpf(nova_conta.cpf) == 0){
-	    printf("\nCPF Inv·lido\n");
+	    printf("\nCPF Inv√°lido\n");
 	    return 0;
 	}
 	
@@ -42,13 +42,13 @@ int criar_conta(struct Conta *contas, int *count, int max){
 	printf("Deposito Inicial: ");
 	scanf("%f", &nova_conta.dinheiro);
 	
-	contas[*count] = nova_conta;//Copia os dados da nova conta para posiÁ„o correta
+	contas[*count] = nova_conta;//Copia os dados da nova conta para posi√ß√£o correta
 	
 	(*count)++; //incrementando +1 no contador;
 	return 1;
 }
 
-//FunÁ„o para exibir as Contas
+//Fun√ß√£o para exibir as Contas
 void exibir_contas(struct Conta *contas, int count){
 	int i; 
 	for(i = 0; i<count; i++){
@@ -57,15 +57,13 @@ void exibir_contas(struct Conta *contas, int count){
 	}
 }
 
-//FunÁ„o para buscar uma conta a partir do CPF
+//Fun√ß√£o para buscar uma conta a partir do CPF
 int buscar_conta(struct Conta *conta, int count){
 	int i;
 	char cpf_buscar[15];
 	int encontrado = -1;
 	printf("Digite o CPF da conta(formato XXX.XXX.XXX-YY): ");
 	scanf("%14s", cpf_buscar);
-	sleep(2);
-	printf("\nBuscando...\n");
 	for(i = 0; i < count; i++){
 		if(strcmp(cpf_buscar, conta[i].cpf) == 0){
 			printf("\nConta Encontrada:\n");
@@ -82,12 +80,12 @@ int buscar_conta(struct Conta *conta, int count){
 	return encontrado;
 }
 
-//FunÁ„o para a validaÁ„o de senha
+//Fun√ß√£o para a valida√ß√£o de senha
 int validacao(struct Conta *conta, int count){
 	
 	int indice = buscar_conta(conta, count);
 	if (!indice){
-		return 0; //Retorna 0 para conta n„o encontrada 
+		return 0; //Retorna 0 para conta n√£o encontrada 
 	}
 	
 	char senha_valida[15];
@@ -96,7 +94,7 @@ int validacao(struct Conta *conta, int count){
 	scanf("%14s", senha_valida);
 		
 	if(strcmp(senha_valida, conta[indice].senha) == 0){
-		printf("Acesso v·lidado.");
+		printf("Acesso v√°lidado.");
 		return 1;
 	}else{
 		printf("Senha Incorreta\n");
@@ -104,42 +102,42 @@ int validacao(struct Conta *conta, int count){
 	}
 }
 
-//FunÁ„o para depositar
+//Fun√ß√£o para depositar
 int depositar(struct Conta *conta, int count){
 	float valor_deposito;
 	
 	int indice = validacao(conta, count);
 	
 	if(indice < 0){
-		return; //A validaÁao n„o deu certo, entao encerra a funÁ„o
+		return; //A valida√ßao n√£o deu certo, entao encerra a fun√ß√£o
 	}
 	
 	printf("Digite o valor a ser depositado: ");
 	scanf("%f", &valor_deposito);
 	
 	if(valor_deposito <= 0){
-		printf("Valor inv·lido para depÛsito.\n");
+		printf("Valor inv√°lido para dep√≥sito.\n");
         return;
 	}
 	
 	conta[indice].dinheiro += valor_deposito;
-	printf("DepÛsito realizado com sucesso! Saldo atual: R$%.2f\n", conta[indice].dinheiro);
+	printf("Dep√≥sito realizado com sucesso! Saldo atual: R$%.2f\n", conta[indice].dinheiro);
 }
 
-//FunÁ„o de saque
+//Fun√ß√£o de saque
 int sacar(struct Conta *conta, int count){
 	float valor_sacar;
 	int indice = validacao(conta, count);
 	
 	if(indice < 0){
-		return; //A validaÁao n„o deu certo, entao encerra a funÁ„o
+		return; //A valida√ßao n√£o deu certo, entao encerra a fun√ß√£o
 	}
 	
 	printf("Digite o valor a ser Sacado: ");
 	scanf("%f", &valor_sacar);
 	
 	if(valor_sacar > conta[indice].dinheiro || valor_sacar <= 0){
-		printf("Valor inv·lido para saque. Verifique seu Saldo\n");
+		printf("Valor inv√°lido para saque. Verifique seu Saldo\n");
         return;
 	}
 	
@@ -159,7 +157,7 @@ int main(){
 		printf("\n\tMenu Principal\n");
 		printf("[1] Criar Conta\n[2] Mostrar Todas as Contas\n[3] Buscar Conta\n[4] Depostar Dinheiro\n[5] Sacar Dinheiro\n[0] Sair\n");
 		printf("------------------------------\n");
-		printf("Sua escolha È: ");
+		printf("Sua escolha √©: ");
 		scanf("%d", &escolha);
 		
 		if(escolha == 0){
@@ -172,20 +170,22 @@ int main(){
 		}else if(escolha == 2){
 			exibir_contas(contas, count);
 		}else if(escolha == 3){
+			printf("\nBuscando...\n");
+			sleep(2);
 			buscar_conta(contas, count);
 		}else if(escolha == 4){
 			depositar(contas, count);
 		}else if(escolha == 5){
 			sacar(contas, count);
 		}else{
-			printf("\n**OpÁ„o Inv·lida**\n");
+			printf("\n**Op√ß√£o Inv√°lida**\n");
 		}
 	}
 	
 	return 0;
 } 
 
-//funÁoes para a verificaÁ„o de cpf
+//fun√ßoes para a verifica√ß√£o de cpf
 int todos_iguais(char cpf[]) {
 	int i;
     for (i = 1; i < 11; i++) {
@@ -214,15 +214,15 @@ int verificador_cpf(char cpf[]){
 	
 	if(strlen(numeros) != 11){
 		printf("Cpf Invalido: Quantidade de Digitos Incorreta");
-		return 0; // Retorna 0 para CPF inv·lido
+		return 0; // Retorna 0 para CPF inv√°lido
 	}
 	
 	if(todos_iguais(numeros)){
-		printf("Cpf Invalido: contÈm todos os dÌgitos iguais.\n");
-		return 0; // Retorna 0 para CPF inv·lido
+		printf("Cpf Invalido: cont√©m todos os d√≠gitos iguais.\n");
+		return 0; // Retorna 0 para CPF inv√°lido
 	}
 	
-	//ValidaÁ„o do Primeiro digito
+	//Valida√ß√£o do Primeiro digito
 	for(i = 0; i<9; i++){
 		soma += (numeros[i] - '0') * (10 - i); 
 	}
@@ -233,7 +233,7 @@ int verificador_cpf(char cpf[]){
 		digito1 = 0;
 	}
 	
-	////ValidaÁ„o do Segundo digito
+	////Valida√ß√£o do Segundo digito
 	for(i = 0; i<10; i++){
 		soma2 += (numeros[i] - '0') * (11 - i); 
 	}
@@ -248,5 +248,5 @@ int verificador_cpf(char cpf[]){
 		return 1; // Retorna 1 para CPF Valido
 	}
 	
-	return 0; // Retorna 0 para CPF inv·lido
+	return 0; // Retorna 0 para CPF inv√°lido
 }

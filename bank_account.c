@@ -16,6 +16,21 @@ struct Conta{
 	float dinheiro;
 };
 
+//Menu Principal
+void exibir_menu() {
+    printf("\n========================================\n");
+    printf("        SISTEMA DE GESTÃO BANCÁRIA\n");
+    printf("========================================\n");
+    printf("[1] Criar Conta\n");
+    printf("[2] Mostrar Todas as Contas\n");
+    printf("[3] Buscar Conta\n");
+    printf("[4] Depositar Dinheiro\n");
+    printf("[5] Sacar Dinheiro\n");
+    printf("[0] Sair\n");
+    printf("----------------------------------------\n");
+    printf("Sua escolha: ");
+}
+
 //Função para criar uma Conta
 int criar_conta(struct Conta *contas, int *count, int max){
 	
@@ -43,8 +58,9 @@ int criar_conta(struct Conta *contas, int *count, int max){
 	scanf("%f", &nova_conta.dinheiro);
 	
 	contas[*count] = nova_conta;//Copia os dados da nova conta para posição correta
-	
+	printf("\nNome: %s\n CPF: %s\n Senha: %s\n Saldo Inicial: R$%.2f\n", contas[*count].nome, contas[*count].cpf, contas[*count].senha, contas[*count].dinheiro);
 	(*count)++; //incrementando +1 no contador;
+	printf("\nConta Criada com Sucesso\n");
 	return 1;
 }
 
@@ -84,20 +100,20 @@ int buscar_conta(struct Conta *conta, int count){
 int validacao(struct Conta *conta, int count){
 	
 	int indice = buscar_conta(conta, count);
-	if (!indice){
-		return 0; //Retorna 0 para conta não encontrada 
+	if (indice == -1){
+		return -1; //Retorna -1 para conta não encontrada 
 	}
 	
 	char senha_valida[15];
 	
-	printf("Digite a senha da conta %s", conta[indice].cpf);
+	printf("Digite a senha da conta %s: ", conta[indice].cpf);
 	scanf("%14s", senha_valida);
 		
 	if(strcmp(senha_valida, conta[indice].senha) == 0){
-		printf("Acesso válidado.");
-		return 1;
+		printf("\nAcesso válidado.\n");
+		return indice;
 	}else{
-		printf("Senha Incorreta\n");
+		printf("\nSenha Incorreta\n");
 		return -1;
 	}
 }
@@ -112,16 +128,16 @@ int depositar(struct Conta *conta, int count){
 		return; //A validaçao não deu certo, entao encerra a função
 	}
 	
-	printf("Digite o valor a ser depositado: ");
+	printf("\nDigite o valor a ser depositado: ");
 	scanf("%f", &valor_deposito);
 	
 	if(valor_deposito <= 0){
-		printf("Valor inválido para depósito.\n");
+		printf("\nValor inválido para depósito.\n");
         return;
 	}
 	
 	conta[indice].dinheiro += valor_deposito;
-	printf("Depósito realizado com sucesso! Saldo atual: R$%.2f\n", conta[indice].dinheiro);
+	printf("\nDepósito realizado com sucesso! Saldo atual: R$%.2f\n", conta[indice].dinheiro);
 }
 
 //Função de saque
@@ -133,16 +149,16 @@ int sacar(struct Conta *conta, int count){
 		return; //A validaçao não deu certo, entao encerra a função
 	}
 	
-	printf("Digite o valor a ser Sacado: ");
+	printf("\nDigite o valor a ser Sacado: ");
 	scanf("%f", &valor_sacar);
 	
 	if(valor_sacar > conta[indice].dinheiro || valor_sacar <= 0){
-		printf("Valor inválido para saque. Verifique seu Saldo\n");
+		printf("\nValor inválido para saque. Verifique seu Saldo\n");
         return;
 	}
 	
 	conta[indice].dinheiro -= valor_sacar;
-	printf("Saque realizado com sucesso! Saldo atual: R$%.2f\n", conta[indice].dinheiro);
+	printf("\nSaque realizado com sucesso! Saldo atual: R$%.2f\n", conta[indice].dinheiro);
 }
 
 int main(){
@@ -154,10 +170,7 @@ int main(){
 	
 	while(1){
 		
-		printf("\n\tMenu Principal\n");
-		printf("[1] Criar Conta\n[2] Mostrar Todas as Contas\n[3] Buscar Conta\n[4] Depostar Dinheiro\n[5] Sacar Dinheiro\n[0] Sair\n");
-		printf("------------------------------\n");
-		printf("Sua escolha é: ");
+		exibir_menu();
 		scanf("%d", &escolha);
 		
 		if(escolha == 0){
@@ -170,8 +183,6 @@ int main(){
 		}else if(escolha == 2){
 			exibir_contas(contas, count);
 		}else if(escolha == 3){
-			printf("\nBuscando...\n");
-			sleep(2);
 			buscar_conta(contas, count);
 		}else if(escolha == 4){
 			depositar(contas, count);

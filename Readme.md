@@ -9,12 +9,12 @@ Este é um sistema simples de gerenciamento de contas bancárias em C. Ele permi
 - **Depósito**: Adicione fundos à conta.
 - **Saque**: Retire fundos de uma conta.
 
-## Como Compilar
-Você precisa do **GCC** ou de um compilador C semelhante. Execute o seguinte comando para compilar:
-
-##Créditos
+## Créditos
 A ideia desse projeto foi retirado no conteúdo disponível em:
 https://www.sourcecodester.com/cc/16866/banking-management-system-c-source-code.html
+
+## Como Compilar
+Você precisa do **GCC** ou de um compilador C semelhante. Execute o seguinte comando para compilar:
 ```bash
 gcc -o banco bank_account.c
 
